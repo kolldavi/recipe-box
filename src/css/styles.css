@@ -1,13 +1,23 @@
+html,
+body,
+ul,
+ol {
+  margin: 0;
+  padding: 0; }
+
 body {
   font-family: helvetica;
   font-size: 18px;
   text-align: center;
   background-color: gray; }
 
-.container {
-  margin-left: 10%;
-  width: 80%; }
-
+@media (min-width: 560px) {
+  .container {
+    margin-left: 10%;
+    width: 80%; } }
+@media (max-width: 560px) {
+  .container {
+    width: 100%; } }
 .accordion {
   background-color: #00b8c9;
   font-size: 2.1rem;
