@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './css/src/css/styles.css';
+import './css/styles.css';
 
 class Recipe extends Component {
   state = {
@@ -12,7 +12,6 @@ class Recipe extends Component {
   };
   render() {
     const { title, ingredients, removeRecipe } = this.props;
-    console.log(removeRecipe);
 
     const { isCollapsed } = this.state;
     return (
@@ -50,7 +49,6 @@ class App extends Component {
     this.setState({
       recipeList: newList
     });
-    console.log(this.state);
   };
   removeRecipe = title => {
     let newList = this.state.recipeList.filter(
@@ -59,9 +57,7 @@ class App extends Component {
 
     this.setState({ recipeList: newList });
   };
-  ComponentDidUpdate() {
-    console.log('update', this.state);
-  }
+
   render() {
     const { recipeList } = this.state;
     return (
