@@ -1,0 +1,79 @@
+body {
+  font-family: helvetica;
+  font-size: 18px;
+  text-align: center;
+  background-color: gray;
+}
+.container {
+  margin-left: 10%;
+  width: 80%;
+}
+.accordion {
+  background-color: #00b8c9;
+  font-size: 2.1rem;
+  display: flex;
+  margin: 1px;
+}
+
+.expand {
+  text-align: left;
+
+  background-color: white;
+  max-height: 220px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  overflow: scroll;
+}
+.ingredients {
+  margin-bottom: 0;
+  text-align: center;
+}
+.hide {
+  text-align: left;
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+}
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin: 3px;
+  background-color: rgb(255, 255, 255);
+}
+.btnDelete {
+  background-color: red;
+  color: rgb(255, 255, 255);
+}
+
+.btnEdit {
+  background-color: rgb(91, 192, 222);
+  color: rgb(255, 255, 255);
+}
+.btn:hover,
+.btnEdit:hover,
+.btnDelete:hover {
+  opacity: 0.5;
+  text-decoration: none;
+}
