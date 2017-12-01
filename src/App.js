@@ -1,11 +1,38 @@
 import React, { Component } from 'react';
 import './css/styles.css';
+import ReactModal from 'react-modal';
+import TextField from 'material-ui/TextField';
 const uuid = require('uuid');
 class Recipe extends Component {
   state = {
-    isCollapsed: true
+    isCollapsed: true,
+    displayModal: false,
+    newTitle: '',
+    newIngrediants: ''
   };
-
+  componentDidMount() {
+    this.setState({
+      newTitle: this.props.title,
+      newIngrediants: this.props.ingredients.toString()
+    });
+  }
+  handleChangeTitle = event => {
+    this.setState({ newTitle: event.target.value });
+  };
+  handleChangeIgrediants = event => {
+    this.setState({ newIngrediants: event.target.value });
+  };
+  componentWillMount() {
+    ReactModal.setAppElement('body');
+  }
+  toggleModal = () => {
+    //editRecipe(id, 'title', ingredients)}
+    if (this.state.displayModal) {
+      this.setState({ displayModal: false });
+    } else {
+      this.setState({ displayModal: true });
+    }
+  };
   toggleClass = () => {
     this.setState({ isCollapsed: !this.state.isCollapsed });
   };
@@ -27,12 +54,42 @@ class Recipe extends Component {
           <button className="btn btnDelete" onClick={() => removeRecipe(id)}>
             delete
           </button>
-          <button
-            className="btn btnEdit"
-            onClick={() => editRecipe(id, 'title', ingredients)}>
+          <button className="btn btnEdit" onClick={() => this.toggleModal()}>
             edit
           </button>
         </div>
+        <ReactModal
+          isOpen={this.state.displayModal}
+          onRequestClose={this.toggleModal}
+          contentLabel="Modal">
+          <div>
+            <h1>Modal Content</h1>
+            <TextField
+              onChange={this.handleChangeTitle}
+              defaultValue={title}
+              floatingLabelText="Title"
+            />
+            <br />
+            <TextField
+              defaultValue={ingredients.toString()}
+              onChange={this.handleChangeIgrediants}
+              floatingLabelText="Ingredients"
+            />
+            <br />
+            <button
+              className="btn btnEdit"
+              onClick={() => {
+                let recipe = this.state.newIngrediants.split(',');
+                editRecipe(id, this.state.newTitle, recipe);
+                this.toggleModal();
+              }}>
+              Update
+            </button>
+            <button className="btn" onClick={() => this.toggleModal}>
+              Cancel
+            </button>
+          </div>
+        </ReactModal>
       </div>
     );
   }
@@ -60,11 +117,11 @@ class App extends Component {
     this.setState({ recipeList: newList });
   };
 
-  editRecipe = (id, title, recipe) => {
+  editRecipe = (id, title, ingredients) => {
     let updatedRecipe = this.state.recipeList.map(item => {
       if (item.id === id) {
         item.title = title;
-        item.recipe = recipe;
+        item.ingredients = ingredients;
       }
       return item;
     });
