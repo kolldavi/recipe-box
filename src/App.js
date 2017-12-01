@@ -63,7 +63,7 @@ class Recipe extends Component {
           onRequestClose={this.toggleModal}
           contentLabel="Modal">
           <div>
-            <h1>Modal Content</h1>
+            <h1>Edit Recipe</h1>
             <TextField
               onChange={this.handleChangeTitle}
               defaultValue={title}
@@ -85,7 +85,7 @@ class Recipe extends Component {
               }}>
               Update
             </button>
-            <button className="btn" onClick={() => this.toggleModal}>
+            <button className="btn" onClick={() => this.toggleModal()}>
               Cancel
             </button>
           </div>
