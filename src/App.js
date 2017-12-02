@@ -19,12 +19,7 @@ class Recipe extends Component {
   handleChangeTitle = event => {
     this.setState({ newTitle: event.target.value });
   };
-  handleChangeIgrediants = event => {
-    this.setState({ newIngrediants: event.target.value });
-  };
-  componentWillMount() {
-    ReactModal.setAppElement('body');
-  }
+
   toggleModal = () => {
     //editRecipe(id, 'title', ingredients)}
     if (this.state.displayModal) {
@@ -58,43 +53,92 @@ class Recipe extends Component {
             edit
           </button>
         </div>
-        <ReactModal
+        <Modal
+          title={title}
+          id={id}
+          ingredients={ingredients}
+          method={editRecipe}
           isOpen={this.state.displayModal}
           onRequestClose={this.toggleModal}
-          contentLabel="Modal">
-          <div>
-            <h1>Edit Recipe</h1>
-            <TextField
-              onChange={this.handleChangeTitle}
-              defaultValue={title}
-              floatingLabelText="Title"
-            />
-            <br />
-            <TextField
-              defaultValue={ingredients.toString()}
-              onChange={this.handleChangeIgrediants}
-              floatingLabelText="Ingredients"
-            />
-            <br />
-            <button
-              className="btn btnEdit"
-              onClick={() => {
-                let recipe = this.state.newIngrediants.split(',');
-                editRecipe(id, this.state.newTitle, recipe);
-                this.toggleModal();
-              }}>
-              Update
-            </button>
-            <button className="btn" onClick={() => this.toggleModal()}>
-              Cancel
-            </button>
-          </div>
-        </ReactModal>
+        />
       </div>
     );
   }
 }
+class Modal extends Component {
+  state = {
+    newTitle: '',
+    newIngrediants: ''
+  };
+  handleChangeTitle = event => {
+    this.setState({ newTitle: event.target.value });
+  };
+  handleChangeIgrediants = event => {
+    this.setState({ newIngrediants: event.target.value });
+  };
+  componentWillMount() {
+    ReactModal.setAppElement('body');
+  }
+  componentDidMount() {
+    this.setState({
+      newTitle: this.props.title,
+      newIngrediants: this.props.ingredients.toString()
+    });
+  }
+  toggleModal = () => {
+    //editRecipe(id, 'title', ingredients)}
+    if (this.state.displayModal) {
+      this.setState({ displayModal: false });
+    } else {
+      this.setState({ displayModal: true });
+    }
+  };
+  render() {
+    const {
+      title,
+      ingredients,
+      id,
+      method,
+      isOpen,
+      onRequestClose
+    } = this.props;
 
+    return (
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
+        contentLabel="Modal">
+        <div>
+          <h1>{title === 'title' ? 'Add' : 'Edit'} Recipe</h1>
+          <TextField
+            onChange={this.handleChangeTitle}
+            defaultValue={title}
+            floatingLabelText="Title"
+          />
+          <br />
+          <TextField
+            defaultValue={ingredients.toString()}
+            onChange={this.handleChangeIgrediants}
+            floatingLabelText="Ingredients"
+          />
+          <br />
+          <button
+            className="btn btnEdit"
+            onClick={() => {
+              let recipe = this.state.newIngrediants.split(',');
+              method(id, this.state.newTitle, recipe);
+              onRequestClose();
+            }}>
+            {title === 'title' ? 'Add' : 'Update'}
+          </button>
+          <button className="btn" onClick={() => onRequestClose()}>
+            Cancel
+          </button>
+        </div>
+      </ReactModal>
+    );
+  }
+}
 class App extends Component {
   state = {
     recipeList: [
@@ -103,10 +147,20 @@ class App extends Component {
         title: 'Dinner',
         ingredients: ['chicken', 'broccoli']
       }
-    ]
+    ],
+    displayModal: false
   };
-  addRecipe = recipe => {
-    let newList = this.state.recipeList.concat(recipe);
+
+  toggleModal = () => {
+    //editRecipe(id, 'title', ingredients)}
+    if (this.state.displayModal) {
+      this.setState({ displayModal: false });
+    } else {
+      this.setState({ displayModal: true });
+    }
+  };
+  addRecipe = (id, title, ingredients) => {
+    let newList = this.state.recipeList.concat({ id, title, ingredients });
     this.setState({
       recipeList: newList
     });
@@ -135,15 +189,7 @@ class App extends Component {
           <h1 className="heading-primary">Recipe Box</h1>
         </header>
         <div className="list-container">
-          <button
-            className="btn"
-            onClick={() =>
-              this.addRecipe({
-                id: uuid.v4(),
-                title: 'Breakfast',
-                ingredients: ['bacon', 'eggs', 'ham']
-              })
-            }>
+          <button className="btn" onClick={() => this.toggleModal()}>
             add new recipe
           </button>
           {recipeList.map(recipe => (
@@ -158,6 +204,14 @@ class App extends Component {
             />
           ))}
         </div>
+        <Modal
+          title={'title'}
+          id={uuid.v4()}
+          ingredients={'ingredients'}
+          method={this.addRecipe}
+          isOpen={this.state.displayModal}
+          onRequestClose={this.toggleModal}
+        />
       </div>
     );
   }

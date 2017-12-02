@@ -63,7 +63,7 @@ body {
   touch-action: manipulation;
   cursor: pointer;
   background-image: none;
-  border: 1px solid transparent;
+  border: 1px solid black;
   white-space: nowrap;
   padding: 6px 12px;
   font-size: 14px;
@@ -79,11 +79,13 @@ body {
 .btnDelete {
   background-color: red;
   color: rgb(255, 255, 255);
+  border: 1px solid transparent;
 }
 
 .btnEdit {
   background-color: rgb(91, 192, 222);
   color: rgb(255, 255, 255);
+  border: 1px solid transparent;
 }
 .btn:hover,
 .btnEdit:hover,
