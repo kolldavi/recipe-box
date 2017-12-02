@@ -36,8 +36,8 @@ class Recipe extends Component {
 
     const { isCollapsed } = this.state;
     return (
-      <div className="container">
-        <div className="accordion" onClick={this.toggleClass}>
+      <div className="">
+        <div className="accordion " onClick={this.toggleClass}>
           <h3>{title}</h3>
         </div>
         <div className={isCollapsed ? 'hide' : 'expand'}>
@@ -139,18 +139,39 @@ class Modal extends Component {
     );
   }
 }
-class App extends Component {
-  state = {
-    recipeList: [
-      {
-        id: uuid.v4(),
-        title: 'Dinner',
-        ingredients: ['chicken', 'broccoli']
-      }
-    ],
-    displayModal: false
-  };
 
+class App extends Component {
+  constructor() {
+    super();
+    const storedRecipe = localStorage.getItem('recipe_box');
+    var data;
+    if (storedRecipe) {
+      data = JSON.parse(storedRecipe);
+    } else {
+      data = [
+        {
+          id: uuid.v4(),
+          title: 'Egg McMuffin',
+          ingredients: ['eggs', 'cheese', 'english muffin', 'sausage']
+        },
+        {
+          id: uuid.v4(),
+          title: 'healthy chicken',
+          ingredients: ['chicken', 'broccoli', 'rice']
+        }
+      ];
+    }
+    this.state = {
+      recipeList: data,
+      displayModal: false
+    };
+  }
+  componentDidUpdate() {
+    this.saveToLocal();
+  }
+  saveToLocal() {
+    localStorage.setItem('recipe_box', JSON.stringify(this.state.recipeList));
+  }
   toggleModal = () => {
     //editRecipe(id, 'title', ingredients)}
     if (this.state.displayModal) {
@@ -184,25 +205,27 @@ class App extends Component {
   render() {
     const { recipeList } = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className="wrapper">
+        <header>
           <h1 className="heading-primary">Recipe Box</h1>
         </header>
-        <div className="list-container">
+        <div className="content">
           <button className="btn" onClick={() => this.toggleModal()}>
             add new recipe
           </button>
-          {recipeList.map(recipe => (
-            <Recipe
-              className="accordionItem"
-              id={recipe.id}
-              key={recipe.id}
-              title={recipe.title}
-              ingredients={recipe.ingredients}
-              removeRecipe={this.removeRecipe}
-              editRecipe={this.editRecipe}
-            />
-          ))}
+          <div className="listing">
+            {recipeList.map(recipe => (
+              <Recipe
+                className="content accordion"
+                id={recipe.id}
+                key={recipe.id}
+                title={recipe.title}
+                ingredients={recipe.ingredients}
+                removeRecipe={this.removeRecipe}
+                editRecipe={this.editRecipe}
+              />
+            ))}
+          </div>
         </div>
         <Modal
           title={'title'}

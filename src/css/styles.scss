@@ -1,38 +1,32 @@
-html,
-body,
-ul,
-ol {
-  margin: 0;
-  padding: 0;
+* {
+  box-sizing: border-box;
 }
 body {
-  font-family: helvetica;
-  font-size: 18px;
-  text-align: center;
   background-color: gray;
 }
-@media (min-width: 560px) {
-  .container {
-    margin-left: 10%;
-    width: 80%;
-  }
+.listing {
+  list-style: none;
+  margin: 2em;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  text-align: center;
 }
-@media (max-width: 560px) {
-  .container {
-    width: 100%;
-  }
-}
+
 .accordion {
+  border-radius: 5%;
   background-color: #00b8c9;
-  font-size: 2.1rem;
+
   display: flex;
   margin: 1px;
 }
-
+.ingredients {
+  margin-bottom: 0;
+  text-align: center;
+}
 .expand {
   text-align: left;
-
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   max-height: 220px;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -40,11 +34,9 @@ body {
   -ms-transition: all 0.5s ease;
   overflow: scroll;
 }
-.ingredients {
-  margin-bottom: 0;
-  text-align: center;
-}
+
 .hide {
+  background-color: rgb(255, 255, 255);
   text-align: left;
   max-height: 0;
   overflow: hidden;

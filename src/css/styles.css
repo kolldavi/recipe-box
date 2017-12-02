@@ -1,28 +1,31 @@
-html,
-body,
-ul,
-ol {
-  margin: 0;
-  padding: 0; }
+* {
+  box-sizing: border-box;
+}
 
 body {
-  font-family: helvetica;
-  font-size: 18px;
-  text-align: center;
-  background-color: gray; }
+  background-color: gray;
+}
 
-@media (min-width: 560px) {
-  .container {
-    margin-left: 10%;
-    width: 80%; } }
-@media (max-width: 560px) {
-  .container {
-    width: 100%; } }
+.listing {
+  list-style: none;
+  margin: 2em;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  text-align: center;
+}
+
 .accordion {
+  border-radius: 5%;
   background-color: #00b8c9;
-  font-size: 2.1rem;
   display: flex;
-  margin: 1px; }
+  margin: 1px;
+}
+
+.ingredients {
+  margin-bottom: 0;
+  text-align: center;
+}
 
 .expand {
   text-align: left;
@@ -32,20 +35,19 @@ body {
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;
-  overflow: scroll; }
-
-.ingredients {
-  margin-bottom: 0;
-  text-align: center; }
+  overflow: scroll;
+}
 
 .hide {
+  background-color: white;
   text-align: left;
   max-height: 0;
   overflow: hidden;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease; }
+  -ms-transition: all 0.5s ease;
+}
 
 .btn {
   display: inline-block;
@@ -67,29 +69,34 @@ body {
   -ms-user-select: none;
   user-select: none;
   margin: 3px;
-  background-color: white; }
+  background-color: white;
+}
 
 .btnDelete {
   background-color: red;
   color: white;
-  border: 1px solid transparent; }
+  border: 1px solid transparent;
+}
 
 .btnEdit {
   background-color: #5bc0de;
   color: white;
-  border: 1px solid transparent; }
+  border: 1px solid transparent;
+}
 
 .btn:hover,
 .btnEdit:hover,
 .btnDelete:hover {
   opacity: 0.5;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 .modal-header {
   font-size: 1.25em;
   margin: 5px 0px;
   text-transform: uppercase;
   color: #2e7c31;
-  text-align: center; }
+  text-align: center;
+}
 
 /*# sourceMappingURL=styles.css.map */
