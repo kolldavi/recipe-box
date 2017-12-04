@@ -16,6 +16,7 @@ class Recipe extends Component {
       newIngrediants: this.props.ingredients.toString()
     });
   }
+
   handleChangeTitle = event => {
     this.setState({ newTitle: event.target.value });
   };
@@ -37,8 +38,8 @@ class Recipe extends Component {
     const { isCollapsed } = this.state;
     return (
       <div className="">
-        <div className="accordion " onClick={this.toggleClass}>
-          <h3>{title}</h3>
+        <div className="accordion  " onClick={this.toggleClass}>
+              <h3>{title}</h3>
         </div>
         <div className={isCollapsed ? 'hide' : 'expand'}>
           <h4 className="ingredients">Ingredients</h4>
@@ -145,7 +146,7 @@ class App extends Component {
     super();
     const storedRecipe = localStorage.getItem('recipe_box');
     var data;
-    if (storedRecipe) {
+    if (!storedRecipe) {
       data = JSON.parse(storedRecipe);
     } else {
       data = [
@@ -153,6 +154,16 @@ class App extends Component {
           id: uuid.v4(),
           title: 'Egg McMuffin',
           ingredients: ['eggs', 'cheese', 'english muffin', 'sausage']
+        },
+        {
+          id: uuid.v4(),
+          title: 'healthy chicken',
+          ingredients: ['chicken', 'broccoli', 'rice']
+        },
+        {
+          id: uuid.v4(),
+          title: 'healthy chicken',
+          ingredients: ['chicken', 'broccoli', 'rice']
         },
         {
           id: uuid.v4(),
@@ -205,18 +216,17 @@ class App extends Component {
   render() {
     const { recipeList } = this.state;
     return (
-      <div className="wrapper">
+      <div>
         <header>
           <h1 className="heading-primary">Recipe Box</h1>
         </header>
-        <div className="content">
+        <div>
           <button className="btn" onClick={() => this.toggleModal()}>
             add new recipe
           </button>
-          <div className="listing">
+          <div className="wrapper">
             {recipeList.map(recipe => (
               <Recipe
-                className="content accordion"
                 id={recipe.id}
                 key={recipe.id}
                 title={recipe.title}
